@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.pytest_cache/
+.env
+logs/
+*.log
+hf_cache/
+
+# Databases and vector index
+data/*.db
+data/chroma_db/*
+!data/chroma_db/.gitkeep
+
+# Real company policies must never be committed
+data/policies/*/*
+!data/policies/*/.gitkeep
+# ...except the fictional samples
+!data/policies/leave/annual_leave_policy.txt
+!data/policies/claims/travel_claim_policy.txt
+!data/policies/medical/medical_allowance_policy.txt

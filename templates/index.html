@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR Policy Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>HR Policy Assistant</h1>
+    <div class="who">
+      <span>{{ user.name }}</span>
+      {% if user.role == 'hr_admin' %}<a href="{{ url_for('documents.admin_page') }}">Manage policies</a>{% endif %}
+      <a href="{{ url_for('auth.logout') }}">Sign out</a>
+    </div>
+  </header>
+
+  <main class="chat-shell">
+    <div id="log" aria-live="polite">
+      <div class="empty" id="empty">
+        <h2>Ask about a company policy</h2>
+        <p>Get answers on leave, claims and allowances, with the policy clause they come from.</p>
+        <div class="chips">
+          <button class="chip" type="button">How many days of annual leave do I get?</button>
+          <button class="chip" type="button">What is the hotel limit for business trips?</button>
+          <button class="chip" type="button">How much is my outpatient medical allowance?</button>
+          <button class="chip" type="button">How do I submit a claim?</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <textarea id="input" rows="1" maxlength="1000" placeholder="Type your question" aria-label="Your question"></textarea>
+      <button class="primary" id="send" type="button">Ask</button>
+    </div>
+    <div class="disclaimer">Answers come from approved policy documents. For special cases, confirm with HR.</div>
+  </main>
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

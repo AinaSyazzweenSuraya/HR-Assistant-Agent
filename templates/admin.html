@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage policies · HR Policy Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Manage policies</h1>
+    <div class="who">
+      <span>{{ user.name }}</span>
+      <a href="{{ url_for('chat.index') }}">Back to chat</a>
+      <a href="{{ url_for('auth.logout') }}">Sign out</a>
+    </div>
+  </header>
+
+  <main class="admin">
+    <section class="panel">
+      <h2>Upload a policy</h2>
+      <p class="note">Uploading a name that already exists replaces it with a new version. The old version stops being used for answers.</p>
+      <form id="upload">
+        <div class="grid2">
+          <div><label for="name">Policy name</label><input id="name" name="name" required placeholder="Annual Leave Policy"></div>
+          <div><label for="category">Category</label>
+            <select id="category" name="category">{% for c in categories %}<option value="{{ c }}">{{ c|capitalize }}</option>{% endfor %}</select></div>
+          <div><label for="access_level">Who can see it</label>
+            <input id="access_level" name="access_level" value="all" list="levels">
+            <datalist id="levels"><option value="all"><option value="permanent"><option value="contract"><option value="grade:G3"><option value="hr_only"></datalist></div>
+          <div><label for="file">File (PDF, DOCX or TXT)</label><input id="file" name="file" type="file" accept=".pdf,.docx,.txt" required></div>
+          <div><label for="effective_date">Effective from</label><input id="effective_date" name="effective_date" type="date"></div>
+          <div><label for="expiry_date">Expires on (optional)</label><input id="expiry_date" name="expiry_date" type="date"></div>
+        </div>
+        <button class="primary" type="submit" style="margin-top:18px;height:44px">Upload and index</button>
+        <div id="status" role="status"></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Active policies</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Category</th><th>Version</th><th>Access</th><th>Effective</th><th>Expires</th><th>Chunks</th><th></th></tr></thead>
+        <tbody id="docs"></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>Questions the assistant could not answer</h2>
+      <p class="note">Use these to find policy gaps and add missing documents.</p>
+      <ul id="unanswered"></ul>
+    </section>
+  </main>
+
+<script>
+const $ = id => document.getElementById(id);
+function cell(tr, text) { const td = document.createElement("td"); td.textContent = text; tr.appendChild(td); return td; }
+
+async function loadDocs() {
+  const docs = await (await fetch("/api/admin/documents")).json();
+  const body = $("docs"); body.replaceChildren();
+  if (!docs.length) { const tr = body.insertRow(); const td = cell(tr, "No policies yet. Upload one above."); td.colSpan = 8; }
+  docs.forEach(d => {
+    const tr = body.insertRow();
+    [d.name, d.category, "v" + d.version, d.access_level, d.effective_date, d.expiry_date || "none", d.chunk_count].forEach(v => cell(tr, v));
+    const td = cell(tr, ""); const b = document.createElement("button");
+    b.className = "link"; b.textContent = "Remove";
+    b.onclick = async () => {
+      if (!confirm(`Remove ${d.name} v${d.version} from the assistant?`)) return;
+      await fetch("/api/admin/documents/" + d.id, { method: "DELETE" }); loadDocs();
+    };
+    td.appendChild(b);
+  });
+}
+
+async function loadUnanswered() {
+  const rows = await (await fetch("/api/admin/unanswered")).json();
+  const ul = $("unanswered"); ul.replaceChildren();
+  if (!rows.length) { const li = document.createElement("li"); li.textContent = "None so far."; ul.appendChild(li); }
+  rows.forEach(r => { const li = document.createElement("li"); li.textContent = `${r.question} (${r.created_at.replace("T", " ")})`; ul.appendChild(li); });
+}
+
+$("upload").addEventListener("submit", async e => {
+  e.preventDefault();
+  const s = $("status"); s.className = ""; s.textContent = "Reading and indexing the document. This can take a moment.";
+  const res = await fetch("/api/admin/documents", { method: "POST", body: new FormData(e.target) });
+  const data = await res.json();
+  if (res.ok) { s.className = "ok"; s.textContent = `Indexed ${data.name} v${data.version} (${data.chunk_count} chunks).`; e.target.reset(); $("access_level").value = "all"; loadDocs(); }
+  else { s.className = "err"; s.textContent = data.error || "Upload failed."; }
+});
+
+loadDocs(); loadUnanswered();
+</script>
+</body>
+</html>
