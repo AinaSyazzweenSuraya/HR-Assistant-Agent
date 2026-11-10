@@ -6,34 +6,30 @@
   <title>HR Policy Assistant</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="chat-page">
   {% include "_header.html" %}
 
   <main class="chat-shell" id="main">
-    <div class="workspace-heading"><span class="eyebrow">EMPLOYEE RESOURCES</span><span class="workspace-label">Your policy desk</span></div>
     <div id="log" aria-live="polite">
       <div class="empty" id="empty">
-        <span class="section-label"><span aria-hidden="true">§</span> A little clarity for your workday</span>
-        <h1>Good questions.<br>Clear answers.</h1>
-        <p>From time off to travel claims, find your way through company policies. Start with a topic or ask in your own words.</p>
-        <div class="topics-heading">WHAT CAN WE HELP WITH?</div>
+        <h1>How can we help?</h1>
+        <p>Choose a topic or ask a question.</p>
         <div class="chips">
-          <button class="chip" type="button" data-question="How many days of annual leave do I get?"><span class="topic-icon" aria-hidden="true">☼</span><span><strong>Leave &amp; time off</strong><small>Annual leave and your entitlements</small></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
-          <button class="chip" type="button" data-question="What is the hotel limit for business trips?"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span><span><strong>Business travel</strong><small>Trips, hotel rates and travel limits</small></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
-          <button class="chip" type="button" data-question="How much is my outpatient medical allowance?"><span class="topic-icon" aria-hidden="true">+</span><span><strong>Health &amp; wellbeing</strong><small>Medical benefits and allowances</small></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
-          <button class="chip" type="button" data-question="How do I submit a claim?"><span class="topic-icon" aria-hidden="true">≡</span><span><strong>Claims &amp; expenses</strong><small>What to claim and how to submit it</small></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
+          <button class="chip" type="button" data-question="How many days of annual leave do I get?"><span class="topic-icon" aria-hidden="true">☼</span><span><strong>Leave</strong></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
+          <button class="chip" type="button" data-question="What is the hotel limit for business trips?"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span><span><strong>Travel</strong></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
+          <button class="chip" type="button" data-question="How much is my outpatient medical allowance?"><span class="topic-icon" aria-hidden="true">+</span><span><strong>Medical</strong></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
+          <button class="chip" type="button" data-question="How do I submit a claim?"><span class="topic-icon" aria-hidden="true">≡</span><span><strong>Claims</strong></span><span class="topic-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button>
         </div>
-        <div class="reference-note"><span aria-hidden="true">§</span> Every answer includes the policy references, so you can read the details.</div>
       </div>
     </div>
 
-    <div class="composer-wrap"><label class="composer-label" for="input">What would you like to know?</label>
+    <div class="composer-wrap"><label class="composer-label" for="input">Your question</label>
     <div class="composer">
-      <textarea id="input" rows="1" maxlength="1000" placeholder="e.g. How many days of annual leave do I get?" aria-label="Your question"></textarea>
+      <textarea id="input" rows="1" maxlength="1000" placeholder="Ask about your company policy…" aria-label="Your question"></textarea>
       <button class="primary" id="send" type="button">Ask <span aria-hidden="true">↑</span></button>
     </div>
     </div>
-    <div class="disclaimer">Answers come from approved policy documents. For special cases, confirm with HR.</div>
+    <div class="disclaimer">For exceptions, contact HR.</div>
   </main>
   <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>

@@ -37,8 +37,7 @@ function addBot(data, cls) {
 
   if (data.sources && data.sources.length) {
     const det = el("details", "sources");
-    det.open = true;
-    det.appendChild(el("summary", "", `Policy references (${data.sources.length})`));
+    det.appendChild(el("summary", "", `Sources (${data.sources.length})`));
     data.sources.forEach(s => {
       const row = el("div", "source");
       row.appendChild(el("span", "tag", `[${s.id}]`));

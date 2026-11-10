@@ -1,9 +1,9 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="topbar">
-  <a class="brand" href="{{ url_for('chat.index') }}"><span class="brand-mark" aria-hidden="true">h<span>.</span></span><span>HR Policy Assistant<small>Your workplace, made clearer</small></span></a>
+  <a class="brand" href="{{ url_for('chat.index') }}"><span class="brand-mark" aria-hidden="true">h<span>.</span></span><span>HR Policies</span></a>
   <nav class="who" aria-label="Main navigation">
-    <a class="nav-link {{ 'active' if request.endpoint == 'chat.index' }}" href="{{ url_for('chat.index') }}">Ask a question</a>
-    {% if user.role == 'hr_admin' %}<a class="nav-link {{ 'active' if request.endpoint == 'documents.admin_page' }}" href="{{ url_for('documents.admin_page') }}">Manage policies</a>{% endif %}
+    <a class="nav-link {{ 'active' if request.endpoint == 'chat.index' }}" href="{{ url_for('chat.index') }}">Questions</a>
+    {% if user.role == 'hr_admin' %}<a class="nav-link {{ 'active' if request.endpoint == 'documents.admin_page' }}" href="{{ url_for('documents.admin_page') }}">Policies</a>{% endif %}
     <span class="profile"><span class="avatar" aria-hidden="true">{{ user.name[:1]|upper }}</span><span>{{ user.name }}</span></span>
     <a class="signout" href="{{ url_for('auth.logout') }}">Sign out <span aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>
   </nav>

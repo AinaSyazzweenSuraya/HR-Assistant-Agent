@@ -10,10 +10,10 @@
   {% include "_header.html" %}
 
   <main class="admin" id="main">
-    <div class="admin-heading"><span class="eyebrow">HR WORKSPACE</span><h1>Policy management</h1><p>Keep your team informed with clear, up-to-date policies.</p></div>
+    <div class="admin-heading"><h1>Policies</h1></div>
     <section class="panel">
       <h2>Upload a policy</h2>
-      <p class="note">Uploading a name that already exists replaces it with a new version. The old version stops being used for answers.</p>
+      <p class="note">Use the same name to update an existing policy.</p>
       <form id="upload">
         <div class="grid2">
           <div><label for="name">Policy name</label><input id="name" name="name" required placeholder="Annual Leave Policy"></div>
@@ -26,7 +26,7 @@
           <div><label for="effective_date">Effective from</label><input id="effective_date" name="effective_date" type="date"></div>
           <div><label for="expiry_date">Expires on (optional)</label><input id="expiry_date" name="expiry_date" type="date"></div>
         </div>
-        <button class="primary" type="submit" style="margin-top:18px;height:44px">Upload and index</button>
+        <button class="primary" type="submit" style="margin-top:18px;height:44px">Upload policy</button>
         <div id="status" role="status"></div>
       </form>
     </section>
@@ -40,8 +40,8 @@
     </section>
 
     <section class="panel">
-      <h2>Questions that need a closer look</h2>
-      <p class="note">Use these to find policy gaps and add missing documents.</p>
+      <h2>Unanswered questions</h2>
+      <p class="note"></p>
       <ul id="unanswered"></ul>
     </section>
   </main>
@@ -76,7 +76,7 @@ async function loadUnanswered() {
 
 $("upload").addEventListener("submit", async e => {
   e.preventDefault();
-  const s = $("status"); s.className = ""; s.textContent = "Reading and indexing the document. This can take a moment.";
+  const s = $("status"); s.className = ""; s.textContent = "Uploading…";
   const res = await fetch("/api/admin/documents", { method: "POST", body: new FormData(e.target) });
   const data = await res.json();
   if (res.ok) { s.className = "ok"; s.textContent = `Indexed ${data.name} v${data.version} (${data.chunk_count} chunks).`; e.target.reset(); $("access_level").value = "all"; loadDocs(); }
