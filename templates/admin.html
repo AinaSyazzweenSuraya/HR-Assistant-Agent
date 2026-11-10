@@ -7,16 +7,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <header class="topbar">
-    <h1>Manage policies</h1>
-    <div class="who">
-      <span>{{ user.name }}</span>
-      <a href="{{ url_for('chat.index') }}">Back to chat</a>
-      <a href="{{ url_for('auth.logout') }}">Sign out</a>
-    </div>
-  </header>
+  {% include "_header.html" %}
 
-  <main class="admin">
+  <main class="admin" id="main">
+    <div class="admin-heading"><span class="eyebrow">HR WORKSPACE</span><h1>Policy management</h1><p>Keep your team informed with clear, up-to-date policies.</p></div>
     <section class="panel">
       <h2>Upload a policy</h2>
       <p class="note">Uploading a name that already exists replaces it with a new version. The old version stops being used for answers.</p>
@@ -46,7 +40,7 @@
     </section>
 
     <section class="panel">
-      <h2>Questions the assistant could not answer</h2>
+      <h2>Questions that need a closer look</h2>
       <p class="note">Use these to find policy gaps and add missing documents.</p>
       <ul id="unanswered"></ul>
     </section>

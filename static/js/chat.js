@@ -105,4 +105,4 @@ input.addEventListener("input", () => {
   input.style.height = "auto";
   input.style.height = Math.min(input.scrollHeight, 140) + "px";
 });
-document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => ask(c.textContent)));
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => ask(c.dataset.question || c.textContent)));
