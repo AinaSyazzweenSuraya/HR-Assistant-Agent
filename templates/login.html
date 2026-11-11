@@ -5,22 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign in · HR Policy Assistant</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body class="login-page">
-  <main class="login-layout" id="main">
-    <div class="card">
+  <main class="signin" id="main">
+    <section class="signin-art">
+      <div class="shape sun" aria-hidden="true"></div>
+      <div class="shape pill" aria-hidden="true"></div>
+      <div class="shape pink" aria-hidden="true"></div>
+      <div class="shape mint" aria-hidden="true"></div>
+
       <div class="brand"><span class="brand-mark" aria-hidden="true">h<span>.</span></span><span>HR Policies</span></div>
-      <h1>Sign in</h1>
-      <form method="post">
-        <label for="email">Company email</label>
-        <input id="email" name="email" type="email" autocomplete="username" placeholder="you@company.com" required autofocus value="{{ request.form.get('email', '') }}">
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required>
-        {% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
-        <button class="primary" type="submit">Sign in</button>
-      </form>
-      <p class="login-help">Need access? Contact HR.</p>
-    </div>
+
+      <div class="signin-chat" aria-hidden="true">
+        <div class="bubble q">Can I carry over unused leave?</div>
+        <div class="bubble a">Here's what the policy says.<small>Answers show the section they come from</small></div>
+      </div>
+
+      <p class="signin-tagline">Ask about leave, benefits and workplace rules, and get answers taken straight from company policy.</p>
+    </section>
+
+    <section class="signin-form">
+      <div class="signin-card">
+        <h1>Sign in</h1>
+        <p class="lede">Use your company email to ask the HR assistant.</p>
+        <form method="post">
+          <label for="email">Company email</label>
+          <input id="email" name="email" type="email" autocomplete="username" placeholder="you@company.com" required autofocus value="{{ request.form.get('email', '') }}">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+          {% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
+          <button class="primary" type="submit">Sign in</button>
+        </form>
+        <p class="login-help">Need access? Contact HR.</p>
+      </div>
+    </section>
   </main>
 </body>
 </html>

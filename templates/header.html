@@ -1,0 +1,11 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('chat.index') }}"><span class="brand-mark" aria-hidden="true">h<span>.</span></span><span>HR Policies</span></a>
+  <nav class="who" aria-label="Main navigation">
+    <a class="nav-link {{ 'active' if request.endpoint == 'chat.index' }}" href="{{ url_for('chat.index') }}"{% if request.endpoint == 'chat.index' %} aria-current="page"{% endif %}>Questions</a>
+    {% if user.role == 'hr_admin' %}<a class="nav-link {{ 'active' if request.endpoint == 'documents.admin_page' }}" href="{{ url_for('documents.admin_page') }}"{% if request.endpoint == 'documents.admin_page' %} aria-current="page"{% endif %}>Policies</a>{% endif %}
+    <span class="profile"><span class="avatar" aria-hidden="true">{{ user.name[:1]|upper }}</span><span>{{ user.name }}</span></span>
+    {% if user.role == 'hr_admin' %}<span class="role-tag">HR admin</span>{% endif %}
+    <a class="signout" href="{{ url_for('auth.logout') }}">Sign out</a>
+  </nav>
+</header>

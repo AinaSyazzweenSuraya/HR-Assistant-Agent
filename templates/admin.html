@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Manage policies · HR Policy Assistant</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
 </head>
-<body>
-  {% include "_header.html" %}
+<body class="admin-page">
+  {% include "header.html" %}
 
   <main class="admin" id="main">
     <div class="admin-heading"><h1>Policies</h1></div>
-    <section class="panel">
+    <section class="panel upload-panel">
       <h2>Upload a policy</h2>
       <p class="note">Use the same name to update an existing policy.</p>
       <form id="upload">
@@ -26,7 +27,7 @@
           <div><label for="effective_date">Effective from</label><input id="effective_date" name="effective_date" type="date"></div>
           <div><label for="expiry_date">Expires on (optional)</label><input id="expiry_date" name="expiry_date" type="date"></div>
         </div>
-        <button class="primary" type="submit" style="margin-top:18px;height:44px">Upload policy</button>
+        <button class="primary" type="submit">Upload policy</button>
         <div id="status" role="status"></div>
       </form>
     </section>
@@ -38,52 +39,8 @@
         <tbody id="docs"></tbody>
       </table></div>
     </section>
-
-    <section class="panel">
-      <h2>Unanswered questions</h2>
-      <p class="note"></p>
-      <ul id="unanswered"></ul>
-    </section>
   </main>
 
-<script>
-const $ = id => document.getElementById(id);
-function cell(tr, text) { const td = document.createElement("td"); td.textContent = text; tr.appendChild(td); return td; }
-
-async function loadDocs() {
-  const docs = await (await fetch("/api/admin/documents")).json();
-  const body = $("docs"); body.replaceChildren();
-  if (!docs.length) { const tr = body.insertRow(); const td = cell(tr, "No policies yet. Upload one above."); td.colSpan = 8; }
-  docs.forEach(d => {
-    const tr = body.insertRow();
-    [d.name, d.category, "v" + d.version, d.access_level, d.effective_date, d.expiry_date || "none", d.chunk_count].forEach(v => cell(tr, v));
-    const td = cell(tr, ""); const b = document.createElement("button");
-    b.className = "link"; b.textContent = "Remove";
-    b.onclick = async () => {
-      if (!confirm(`Remove ${d.name} v${d.version} from the assistant?`)) return;
-      await fetch("/api/admin/documents/" + d.id, { method: "DELETE" }); loadDocs();
-    };
-    td.appendChild(b);
-  });
-}
-
-async function loadUnanswered() {
-  const rows = await (await fetch("/api/admin/unanswered")).json();
-  const ul = $("unanswered"); ul.replaceChildren();
-  if (!rows.length) { const li = document.createElement("li"); li.textContent = "None so far."; ul.appendChild(li); }
-  rows.forEach(r => { const li = document.createElement("li"); li.textContent = `${r.question} (${r.created_at.replace("T", " ")})`; ul.appendChild(li); });
-}
-
-$("upload").addEventListener("submit", async e => {
-  e.preventDefault();
-  const s = $("status"); s.className = ""; s.textContent = "Uploading…";
-  const res = await fetch("/api/admin/documents", { method: "POST", body: new FormData(e.target) });
-  const data = await res.json();
-  if (res.ok) { s.className = "ok"; s.textContent = `Indexed ${data.name} v${data.version} (${data.chunk_count} chunks).`; e.target.reset(); $("access_level").value = "all"; loadDocs(); }
-  else { s.className = "err"; s.textContent = data.error || "Upload failed."; }
-});
-
-loadDocs(); loadUnanswered();
-</script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 </body>
 </html>

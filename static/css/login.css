@@ -1,0 +1,114 @@
+/* Sign-in page only. Load after style.css. */
+.login-page {
+  --blue: #2a35d1;
+  --blue-deep: #1d26a6;
+  --ink: #15154a;
+  --sun: #ffd23f;
+  --tangerine: #ff7a3c;
+  --pink: #ff9fc2;
+  --mint: #7fdcb3;
+  --field: #c9cdf2;
+  background: #fff;
+  color: var(--ink);
+}
+
+.signin {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 1fr);
+}
+
+/* ---------- Left: colour panel ---------- */
+.signin-art {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 56px;
+  background: var(--blue);
+  color: #fff;
+}
+.signin-art > * { position: relative; z-index: 1; }
+.signin-art .brand { color: #fff; }
+.signin-art .brand-mark { background: var(--sun); color: var(--blue); }
+.signin-art .brand-mark span { color: var(--tangerine); }
+
+.shape { position: absolute; z-index: 0; }
+.shape.sun    { right: -70px; bottom: -70px; width: 240px; height: 240px; border-radius: 50%; background: var(--sun); }
+.shape.pill   { right: -50px; top: 110px; width: 260px; height: 76px; border-radius: 999px; background: var(--tangerine); transform: rotate(-22deg); }
+.shape.pink   { left: -80px; top: 44%; width: 160px; height: 160px; border-radius: 50%; background: var(--pink); }
+.shape.mint   { right: 150px; bottom: 120px; width: 56px; height: 56px; border-radius: 50% 50% 50% 0; background: var(--mint); }
+
+.signin-chat { display: flex; flex-direction: column; gap: 14px; }
+.bubble {
+  max-width: 340px;
+  padding: 16px 20px;
+  border-radius: 22px;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--ink);
+  animation: pop .45s cubic-bezier(.2, .9, .3, 1.2) both;
+}
+.bubble.q { align-self: flex-start; background: #fff; border-bottom-left-radius: 6px; }
+.bubble.a { align-self: flex-end; background: var(--sun); border-bottom-right-radius: 6px; animation-delay: .5s; }
+.bubble small { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; opacity: .75; }
+@keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+
+.signin-tagline { margin: 0; max-width: 34ch; font-size: 16px; line-height: 1.5; }
+
+/* ---------- Right: form ---------- */
+.signin-form { display: grid; place-items: center; padding: 32px 24px; }
+.signin-card { width: 100%; max-width: 380px; }
+.signin-card h1 { margin: 0 0 6px; font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; }
+.signin-card .lede { margin: 0 0 8px; color: #4b4d7a; font-size: 15px; }
+
+.login-page label { margin: 20px 0 6px; font-size: 14px; font-weight: 650; color: var(--ink); }
+.login-page input {
+  border: 2px solid var(--field);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  min-height: 48px;
+  font-size: 16px;
+}
+.login-page input::placeholder { color: #8a8cb0; }
+.login-page input:hover { border-color: #9da3e6; }
+.login-page input:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(42, 53, 209, .18); }
+
+.login-page .err {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-left: 4px solid var(--danger);
+  background: #fdeeee;
+  border-radius: 0 8px 8px 0;
+  font-weight: 600;
+}
+
+.signin-card button.primary {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 24px;
+  border-radius: 10px;
+  background: var(--blue);
+  font-size: 16px;
+  font-weight: 700;
+}
+.signin-card button.primary:hover { background: var(--blue-deep); }
+.login-page :focus-visible { outline-color: var(--tangerine); }
+.signin-card .login-help { margin: 20px 0 0; text-align: left; color: #4b4d7a; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .signin { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .signin-art { padding: 20px; min-height: 130px; gap: 0; }
+  .signin-chat, .signin-tagline { display: none; }
+  .shape.sun  { width: 150px; height: 150px; right: -40px; bottom: -80px; }
+  .shape.pill { width: 190px; height: 56px; right: 10px; top: -10px; }
+  .shape.pink { left: auto; right: 150px; top: auto; bottom: -50px; width: 90px; height: 90px; }
+  .shape.mint { display: none; }
+  .signin-form { place-items: start center; padding: 28px 20px 40px; }
+  .signin-card h1 { font-size: 30px; }
+}
