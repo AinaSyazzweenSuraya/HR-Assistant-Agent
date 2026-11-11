@@ -16,8 +16,8 @@ from app.models import document_metadata as db  # noqa: E402
 
 DEMO = [
     ("hr@company.com", "HR Admin", "hr12345", "hr_admin", "permanent", ""),
-    ("staff@company.com", "Aisha (Permanent)", "staff12345", "employee", "permanent", "G3"),
-    ("contract@company.com", "Daniel (Contract)", "contract12345", "employee", "contract", ""),
+    ("staff@company.com", "Aina Syazzween", "staff12345", "employee", "permanent", "G3"),
+    ("contract@company.com", "Muhd Hafiz", "contract12345", "employee", "contract", ""),
 ]
 
 
